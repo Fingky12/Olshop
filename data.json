@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nama": "Sepatu Sneakers",
+    "harga": 250000,
+    "kategori": "Fashion",
+    "gambar": "assets/images/sepatu.jpg"
+  },
+  {
+    "id": 2,
+    "nama": "Kaos Distro",
+    "harga": 120000,
+    "kategori": "Fashion",
+    "gambar": "assets/images/kaos.jpg"
+  },
+  {
+    "id": 3,
+    "nama": "Headset Gaming",
+    "harga": 350000,
+    "kategori": "Elektronik",
+    "gambar": "assets/images/headset.jpg"
+  }
+]
