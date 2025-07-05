@@ -1,28 +1,39 @@
-const produk = [
-  { nama: "Sepatu Sneakers", harga: 250000 },
-  { nama: "Kaos Distro", harga: 120000 },
-  { nama: "Topi Keren", harga: 80000 }
-];
+let produk = [];
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 
-let keranjang = [];
+fetch("data.json")
+  .then((res) => res.json())
+  .then((data) => {
+    produk = data;
+    tampilkanProduk(produk);
+    renderKeranjang();
+  });
 
-function tampilkanProduk() {
+function tampilkanProduk(data) {
   const container = document.getElementById("produkList");
-  produk.forEach((item, index) => {
+  container.innerHTML = "";
+  data.forEach((item) => {
     const div = document.createElement("div");
     div.className = "produk-item";
     div.innerHTML = `
+      <img src="${item.gambar}" width="100%" />
       <h3>${item.nama}</h3>
       <p>Harga: Rp${item.harga}</p>
-      <button onclick="tambahKeKeranjang(${index})">Beli</button>
+      <button onclick="tambahKeKeranjang(${item.id})">Beli</button>
     `;
     container.appendChild(div);
   });
 }
 
-function tambahKeKeranjang(index) {
-  keranjang.push(produk[index]);
+function tambahKeKeranjang(id) {
+  const item = produk.find(p => p.id === id);
+  keranjang.push(item);
+  simpanKeranjang();
   renderKeranjang();
+}
+
+function simpanKeranjang() {
+  localStorage.setItem("keranjang", JSON.stringify(keranjang));
 }
 
 function renderKeranjang() {
@@ -39,4 +50,22 @@ function renderKeranjang() {
   totalEl.textContent = `Rp${total}`;
 }
 
-tampilkanProduk();
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
+
+function filterKategori() {
+  const kategori = document.getElementById("filterKategori").value;
+  const hasil = kategori ? produk.filter(p => p.kategori === kategori) : produk;
+  tampilkanProduk(hasil);
+}
+
+function checkoutWhatsApp() {
+  let pesan = "Saya ingin membeli:\n";
+  keranjang.forEach((item) => {
+    pesan += `- ${item.nama} (Rp${item.harga})\n`;
+  });
+  const total = keranjang.reduce((a, b) => a + b.harga, 0);
+  pesan += `\nTotal: Rp${total}`;
+  window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`, "_blank");
+}

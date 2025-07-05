@@ -40,3 +40,21 @@ footer {
   text-align: center;
   padding: 1rem;
 }
+
+.dark {
+  background: #121212;
+  color: white;
+}
+
+.dark header {
+  background: #333;
+}
+
+.dark .produk-item {
+  background: #1e1e1e;
+  border-color: #444;
+}
+
+.produk-item img {
+  border-radius: 10px;
+}
