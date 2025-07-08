@@ -4,7 +4,7 @@ let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 fetch("data.json")
   .then((res) => res.json())
   .then((data) => {
-    produk = data;
+    produk = [...data, ...produkTambahan];
     tampilkanProduk(produk);
     renderKeranjang();
   });
@@ -68,4 +68,37 @@ function checkoutWhatsApp() {
   const total = keranjang.reduce((a, b) => a + b.harga, 0);
   pesan += `\nTotal: Rp${total}`;
   window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`, "_blank");
+}
+
+let produkTambahan = JSON.parse(localStorage.getItem("produkTambahan")) || [];
+
+function simpanProdukTambahan() {
+  localStorage.setItem("produkTambahan", JSON.stringify(produkTambahan));
+}
+
+function tambahProdukBaru() {
+  const nama = document.getElementById("namaProduk").value;
+  const harga = parseInt(document.getElementById("hargaProduk").value);
+  const kategori = document.getElementById("kategoriProduk").value;
+  const gambar = document.getElementById("gambarProduk").value;
+
+  if (!nama || !harga || !kategori || !gambar) {
+    alert("Semua field wajib diisi!");
+    return;
+  }
+
+  const idBaru = Date.now(); // ID unik
+  const produkBaru = { id: idBaru, nama, harga, kategori, gambar };
+
+  produkTambahan.push(produkBaru);
+  simpanProdukTambahan();
+
+  produk.push(produkBaru);
+  tampilkanProduk(produk);
+  
+  // Reset form
+  document.getElementById("namaProduk").value = "";
+  document.getElementById("hargaProduk").value = "";
+  document.getElementById("kategoriProduk").value = "";
+  document.getElementById("gambarProduk").value = "";
 }

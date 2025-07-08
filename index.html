@@ -27,7 +27,16 @@
     <p>Cari kebutuhanmu, klik, dan beli sekarang!</p>
   </section>
 
-  <section id="produk">
+  <section id="form-produk">
+    <h2>➕ Tambah Produk</h2>
+    <input type="text" id="namaProduk" placeholder="Nama Produk"><br>
+    <input type="number" id="hargaProduk" placeholder="Harga"><br>
+    <input type="text" id="kategoriProduk" placeholder="Kategori"><br>
+    <input type="text" id="gambarProduk" placeholder="URL Gambar"><br>
+    <button onclick="tambahProdukBaru()">Tambah Produk</button>
+  </section>
+  
+<section id="produk">
     <h2>📦 Daftar Produk</h2>
     <div class="produk-container" id="produkList"></div>
   </section>
@@ -43,6 +52,6 @@
     <p>© 2025 Toko Online Ongky</p>
   </footer>
 
-  <script src="script.js"></script>
+ <script src="script.js"></script>
 </body>
 </html>
